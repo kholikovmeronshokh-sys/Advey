@@ -26,7 +26,7 @@ export default async function handler(req, res) {
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.GROQ_API_KEY || 'default_secret');
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'default_secret');
         const userId = decoded.userId;
 
         const { message, language } = req.body;
