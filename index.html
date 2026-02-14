@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advey - AI Maslahat Generatori</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <canvas id="bg"></canvas>
+    
+    <div id="app">
+        <!-- Auth Screen -->
+        <div id="authScreen" class="screen active">
+            <div class="auth-container">
+                <h1 class="logo">Advey</h1>
+                <p class="tagline" data-uz="Futuristik AI Maslahat" data-en="Futuristic AI Advice">Futuristik AI Maslahat</p>
+                
+                <div class="lang-switch">
+                    <button class="lang-btn active" data-lang="uz">
+                        <i class="fas fa-flag"></i> O'zbekcha
+                    </button>
+                    <button class="lang-btn" data-lang="en">
+                        <i class="fas fa-flag-usa"></i> English
+                    </button>
+                </div>
+
+                <div class="auth-tabs">
+                    <button class="tab-btn active" data-tab="login">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span data-uz="Kirish" data-en="Login">Kirish</span>
+                    </button>
+                    <button class="tab-btn" data-tab="register">
+                        <i class="fas fa-user-plus"></i>
+                        <span data-uz="Ro'yxatdan o'tish" data-en="Register">Ro'yxatdan o'tish</span>
+                    </button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm" class="auth-form active">
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="loginEmail" placeholder="Email" required />
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="loginPassword" placeholder="Parol / Password" required />
+                        <button type="button" class="toggle-password" data-target="loginPassword" tabindex="-1">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span data-uz="Kirish" data-en="Login">Kirish</span>
+                    </button>
+                </form>
+
+                <!-- Register Form -->
+                <form id="registerForm" class="auth-form">
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="registerName" placeholder="Ism / Name" required />
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="registerEmail" placeholder="Email" required />
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="registerPassword" placeholder="Parol / Password" required />
+                        <button type="button" class="toggle-password" data-target="registerPassword" tabindex="-1">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-user-plus"></i>
+                        <span data-uz="Ro'yxatdan o'tish" data-en="Register">Ro'yxatdan o'tish</span>
+                    </button>
+                </form>
+
+                <div id="authError" class="error-message"></div>
+            </div>
+            
+            <!-- Footer -->
+            <footer class="auth-footer">
+                <p>© 2026 <strong>Advey</strong> - Created by <strong>Kholikov Meronshokh</strong></p>
+            </footer>
+        </div>
+
+        <!-- Chat Screen -->
+        <div id="chatScreen" class="screen">
+            <div class="chat-header">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="user-details">
+                        <span id="userName" class="user-name"></span>
+                        <div class="stats">
+                            <i class="fas fa-fire"></i>
+                            <span class="stat-label" data-uz="Qolgan:" data-en="Remaining:">Qolgan:</span>
+                            <span id="dailyLimit" class="stat-value">20/20</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button id="newChatBtn" class="btn-icon btn-new-chat">
+                        <i class="fas fa-plus-circle"></i>
+                        <span class="btn-text" data-uz="Yangi" data-en="New">Yangi</span>
+                    </button>
+                    <button id="historyBtn" class="btn-icon">
+                        <i class="fas fa-history"></i>
+                        <span class="btn-text" data-uz="Tarix" data-en="History">Tarix</span>
+                    </button>
+                    <div class="lang-switch">
+                        <button class="lang-btn active" data-lang="uz">
+                            <i class="fas fa-globe"></i> UZ
+                        </button>
+                        <button class="lang-btn" data-lang="en">
+                            <i class="fas fa-globe"></i> EN
+                        </button>
+                    </div>
+                    <button id="logoutBtn" class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="btn-text" data-uz="Chiqish" data-en="Logout">Chiqish</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="chat-container">
+                <div id="messages" class="messages"></div>
+                
+                <form id="chatForm" class="input-form">
+                    <div class="input-wrapper">
+                        <i class="fas fa-comment-dots input-icon"></i>
+                        <input 
+                            type="text" 
+                            id="userInput" 
+                            data-placeholder-uz="Muammoingizni yoki savolingizni yozing..."
+                            data-placeholder-en="Write your problem or question..."
+                            placeholder="Muammoingizni yoki savolingizni yozing..."
+                            autocomplete="off"
+                            required
+                        />
+                    </div>
+                    <button type="submit" id="sendBtn">
+                        <i class="fas fa-paper-plane"></i>
+                        <span class="btn-text" data-uz="Yuborish" data-en="Send">Yuborish</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- History Panel -->
+            <div id="historyPanel" class="history-panel">
+                <div class="history-header">
+                    <h3>
+                        <i class="fas fa-history"></i>
+                        <span data-uz="Suhbatlar tarixi" data-en="Chat History">Suhbatlar tarixi</span>
+                    </h3>
+                    <div class="history-actions">
+                        <button id="clearHistory" class="btn-clear">
+                            <i class="fas fa-trash-alt"></i>
+                            <span data-uz="Tozalash" data-en="Clear">Tozalash</span>
+                        </button>
+                        <button id="closeHistory" class="btn-close">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="historyList" class="history-list"></div>
+            </div>
+            
+            <!-- Footer -->
+            <footer class="chat-footer">
+                <p>© 2026 <strong>Advey</strong> - Created by <strong>Kholikov Meronshokh</strong></p>
+            </footer>
+        </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>
